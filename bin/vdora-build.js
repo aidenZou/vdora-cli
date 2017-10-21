@@ -7,11 +7,16 @@ const rm = require('rimraf')
 const path = require('path')
 const chalk = require('chalk')
 const webpack = require('webpack')
+var merge = require('webpack-merge')
 const config = require('../config/webpack/config')
-const webpackConfig = require('../config/webpack/webpack.prod.conf')
+const defaultWebpackConfig = require('../config/webpack/webpack.prod.conf')
+var loadConfig = require('../lib/load-config')
 
 const spinner = ora('building for production...')
 spinner.start()
+
+var divConfig = loadConfig('webpack.config.js')
+var webpackConfig = merge(defaultWebpackConfig, divConfig)
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     if (err) throw err

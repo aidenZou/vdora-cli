@@ -1,6 +1,6 @@
 {
     "name": "vdora-cli",
-    "version": "0.1.0",
+    "version": "0.1.3-beta.1",
     "description": "一个命令行工具",
     "bin": {
         "vdora": "bin/vdora.js",
@@ -52,12 +52,14 @@
         "request": "^2.81.0",
         "sass-loader": "^6.0.6",
         "url-loader": "^0.6.2",
-        "vue-loader": "^13.3.0",
-        "vue-template-compiler": "^2.5.2",
+        "vue-loader": "^9 || ^10 || ^11 || ^12 || ^13",
         "webpack": "^3.7.1",
         "webpack-dev-middleware": "^1.12.0",
         "webpack-hot-middleware": "^2.19.1",
         "webpack-merge": "^4.1.0"
+    },
+    "peerDependencies": {
+        "vue-template-compiler": "^2.0.0"
     },
     "license": "MIT"
 }

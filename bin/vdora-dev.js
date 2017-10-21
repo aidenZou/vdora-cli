@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var merge = require('webpack-merge')
 const config = require('../config/webpack/config')
 if (!process.env.NODE_ENV) {
     process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
@@ -10,7 +11,9 @@ const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
-const webpackConfig = require('../config/webpack/webpack.dev.conf')
+const defaultWebpackConfig = require('../config/webpack/webpack.dev.conf')
+
+var loadConfig = require('../lib/load-config')
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -21,6 +24,9 @@ const autoOpenBrowser = !!config.dev.autoOpenBrowser
 const proxyTable = config.dev.proxyTable
 
 const app = express()
+
+var divConfig = loadConfig('webpack.config.js')
+var webpackConfig = merge(defaultWebpackConfig, divConfig)
 const compiler = webpack(webpackConfig)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
