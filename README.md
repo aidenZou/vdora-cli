@@ -27,7 +27,7 @@ rm -rf build
 rm -rf config
 ```
 
-删除`package.json`文件 `devDependencies`模块
+删除`package.json`文件 `devDependencies`模块（保留 `vue-template-compiler`）
 
 
 ### 安装`vdora-cli`
@@ -106,6 +106,10 @@ package.json
   "dependencies": {
     "vue": "^2.5.2"
   },
+  "devDependencies": {
+    "vdora-cli": "^0.1.0",
+    "vue-template-compiler": "^2.5.2"
+  },
   "engines": {
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
@@ -114,11 +118,18 @@ package.json
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "devDependencies": {
-    "vdora-cli": "^0.1.0"
-  }
+  ]
 }
 ```
 
+## 配置
 
+package.json
+
+```
+{
+  "buildConfig": {
+    "output.path": "./dist" // 构建输出目录：默认 ./dist
+  }
+}
+```

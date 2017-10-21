@@ -4,14 +4,21 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const packageInfo = require(path.resolve(process.cwd(), './package.json')) || {}
+
+const projectConfig = Object.assign({
+  'output.path': './dist'   // 构建目录
+}, packageInfo.buildConfig)
+
+const buildAssetsRoot = path.resolve(process.cwd(), projectConfig['output.path']);
 
 module.exports = {
     build: {
         env: require('./prod.env'),
         // index: path.resolve(__dirname, '../dist/index.html'),
-        index: path.resolve(process.cwd(), './dist/index.html'),
+        index: path.resolve(buildAssetsRoot, 'index.html'),
         // assetsRoot: path.resolve(__dirname, '../dist'),
-        assetsRoot: path.resolve(process.cwd(), './dist'),
+        assetsRoot: buildAssetsRoot,
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         productionSourceMap: true,
