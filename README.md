@@ -1,11 +1,13 @@
 # vdora-cli
 
-> 一个命令行工具
+> Vue.js projects build tool
+
+[projects example](https://github.com/aidenZou/vdora-cli/tree/example)
 
 
 ## 用法
 
-### 安装脚手架
+### 安装 vue-cli脚手架
 
 ```
 npm install -g vue-cli
@@ -15,14 +17,13 @@ npm install -g vue-cli
 ### 创建 vue + webpack 工程
 
 ```
-vue init webpack my-project
+vue init webpack my-project && cd my-project
 ```
 
 
 ### 删除构建相关配置、模块
 
 ```
-cd my-project
 rm -rf build
 rm -rf config
 ```
@@ -124,10 +125,39 @@ package.json
 
 ## 配置
 
-package.json
+
+### webpack 自定义配置
+
+项目根目录下新加 `webpack.config.js` 文件
+
+```javascript
+'use strict'
+
+var webpackConfig = {
+  // 影响所有（dev、build）
+  entry: {
+    app: './src/main.js'
+  }
+}
+
+// 影响 build
+if (process.env.NODE_ENV === 'production') {
+  webpackConfig.output = {
+    filename: 'js/diy-[name].[chunkhash].js'
+  }
+}
+
+module.exports = webpackConfig
+```
+
+
+### 构建相关配置
+
+`package.json`
 
 ```
 {
+  ...
   "buildConfig": {
     "output.path": "./dist" // 构建输出目录：默认 ./dist
   }
