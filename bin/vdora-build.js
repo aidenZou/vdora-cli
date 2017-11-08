@@ -16,7 +16,10 @@ const spinner = ora('building for production...')
 spinner.start()
 
 var divConfig = loadConfig('webpack.config.js')
-var webpackConfig = merge(defaultWebpackConfig, divConfig)
+var webpackConfig = merge.smartStrategy({
+    entry: 'replace' // or 'replace', defaults to 'append'
+    // 'module.loaders': 'prepend'
+})(defaultWebpackConfig, divConfig)
 
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     if (err) throw err

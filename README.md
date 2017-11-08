@@ -2,6 +2,8 @@
 
 > Vue.js projects build tool
 
+[github](https://github.com/aidenZou/vdora-cli)
+[npm](https://www.npmjs.com/package/vdora-cli)
 [projects example](https://github.com/aidenZou/vdora-cli/tree/example)
 
 

@@ -26,7 +26,10 @@ const proxyTable = config.dev.proxyTable
 const app = express()
 
 var divConfig = loadConfig('webpack.config.js')
-var webpackConfig = merge(defaultWebpackConfig, divConfig)
+var webpackConfig = merge.smartStrategy({
+    entry: 'replace' // or 'replace', defaults to 'append'
+    // 'module.loaders': 'prepend'
+})(defaultWebpackConfig, divConfig)
 const compiler = webpack(webpackConfig)
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
