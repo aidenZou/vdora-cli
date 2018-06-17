@@ -9,5 +9,6 @@ program
     .usage('<command> [options]')
     .command('dev', 'dev')
     .command('build', 'build')
+    .command('publish', 'publish')
     .command('list', 'list packages installed')
     .parse(process.argv)
