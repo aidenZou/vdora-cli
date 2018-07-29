@@ -31,6 +31,7 @@ const {
     rootDir = 'temp/', // 远端根目录
     accessKey,
     secretKey,
+    cover = false, // 同名文件上传是否覆盖
     scope = 'static',
     host = 'https://static.cool-app.cn/'
 } = project.qiniu;
@@ -39,12 +40,6 @@ const spinner = ora('发布中...')
 // spinner.start()
 
 const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
-
-const options = {
-    scope,
-};
-const putPolicy = new qiniu.rs.PutPolicy(options);
-const uploadToken = putPolicy.uploadToken(mac);
 
 const config = new qiniu.conf.Config();
 // 空间对应的机房
@@ -59,7 +54,14 @@ const putExtra = new qiniu.form_up.PutExtra();
 
 // 文件上传
 const uploader = function (localFile, key) {
-    formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr,
+    const options = {
+        scope: cover ? `${scope}:${key}` : scope
+    };
+    const putPolicy = new qiniu.rs.PutPolicy(options);
+    const uploadToken = putPolicy.uploadToken(mac);
+
+    // formUploader.putFile(uploadToken, key, localFile, putExtra, (respErr,
+    formUploader.putFile(uploadToken, key, localFile, null, (respErr,
         respBody, respInfo) => {
         if (respErr) {
             throw respErr;
@@ -67,7 +69,8 @@ const uploader = function (localFile, key) {
         if (respInfo.statusCode == 200) {
             log.success(`发布成功: ${host}${respBody.key}`);
         } else {
-            log.error(respInfo.statusCode);
+            log.error(localFile);
+            // log.error(respInfo.statusCode);
             log.info(JSON.stringify(respBody));
         }
     });

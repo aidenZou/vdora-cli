@@ -1,6 +1,6 @@
 {
     "name": "vdora-cli",
-    "version": "0.2.0",
+    "version": "0.2.3",
     "description": "Vue.js projects build tool",
     "keywords": [
         "vue",
